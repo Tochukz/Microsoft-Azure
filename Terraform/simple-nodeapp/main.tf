@@ -38,8 +38,25 @@ resource "azurerm_linux_web_app" "simple_webapp" {
   location = azurerm_resource_group.simple_rg.location
   service_plan_id = azurerm_service_plan.simple_sp.id
   https_only = true 
+  
+  app_settings = {
+    PORT = 80
+    NODE_ENV = var.node_env
+  }
   site_config {
+    app_command_line = "npm start"
     minimum_tls_version = "1.2"
+    application_stack {
+      node_version = "16-lts"
+    }
+    cors {
+      allowed_origins = [ "http://localhost" ]
+     # support_credentials = true
+    }
+  }
+  
+  tags = {
+    DEPLOY_ENV = var.node_env    
   }
 }
 
