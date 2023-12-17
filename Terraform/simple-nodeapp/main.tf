@@ -44,6 +44,7 @@ resource "azurerm_linux_web_app" "simple_webapp" {
     NODE_ENV = var.node_env
   }
   site_config {
+    health_check_path = "/users"
     app_command_line = "npm start"
     minimum_tls_version = "1.2"
     application_stack {
