@@ -1,0 +1,25 @@
+deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v3
+      with:
+        name: webapp
+        path: webapp
+    - name: Azure Login
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.30.0
+        inlineScript: |
+          az login --service-principal \
+          -u ${{ secrets.DEPLOYMENT_AZURE_CLIENT_ID }} \
+          -p ${{ secrets.DEPLOYMENT_AZURE_CLIENT_SECRET }} \
+          -t ${{ secrets.DEPLOYMENT_AZURE_TENANT_ID }}
+    - name: Deploy to Azure WebApp
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.30.0
+        inlineScript: |
+          zip -r webapp.zip .
+          az webapp deployment source config-zip --resource-group ${{ env.AZURE_WEBAPP_RG }} --name ${{ env.AZURE_WEBAPP_NAME }} --src "webapp.zip"
