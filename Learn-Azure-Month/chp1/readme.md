@@ -53,6 +53,12 @@ To see your active subscription
 $ az account show
 ```
 
+__Azure Developer CLI__  
+[Install Azure Developer CLI](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)   
+When you install `azd`, the following tools are installed within `azd` scope (meaning they are not installed globally) and are removed if azd is uninstalled:
+* Github CLI
+* Bicep CLI
+
 __VSCode Plugin__  
 Install the _Azure CLI Tools_ VSCode extension.   
 The plugin offers an interactive experience, including autocomplete and mouse-over documentation.
