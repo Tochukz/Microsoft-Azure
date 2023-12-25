@@ -8,7 +8,7 @@ const router = express.Router();
 const partitionKey = "pizzamenu";
 
 router.get("/", (req, res, next) => {
-  return res.json({ message: "Welcom to Simple Table API" });
+  return res.json({ message: "Welcome to Simple Table API" });
 });
 
 router.get("/pizza-list", async (req, res, next) => {
@@ -37,6 +37,12 @@ router.get("/pizza/:rowKey", async (req, res, next) => {
 
 router.post("/create-pizza", async (req, res, next) => {
   const { description, cost } = req.body;
+  if (!description || !cost) {
+    const errMsg = "description and cost are required";
+    const error = new Error(errMsg);
+    error.status = 400;
+    return next(error);
+  }
   const entity = {
     partitionKey,
     rowKey: uuidv4(),
@@ -44,6 +50,10 @@ router.post("/create-pizza", async (req, res, next) => {
     cost,
     createdAt: new Date(),
   };
+
+  // return res.json(entity);
+
+  console.log("entity", entity);
 
   try {
     const tableClient = getTableClient();

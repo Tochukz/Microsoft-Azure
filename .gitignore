@@ -8,3 +8,4 @@ terraform.tfstate.backup
 .env
 output
 node_modules
+.DS_Store
