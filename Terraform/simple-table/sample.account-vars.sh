@@ -1,0 +1,2 @@
+resourceGroupName="YourResourceGroupName"
+storageAccountName="YourStorageAccountName"
