@@ -17,4 +17,3 @@ To include markup in a queue message, the contents of the message must either be
 
 ### Learn more
 [Storage QuickStart](https://learn.microsoft.com/en-us/azure/storage/queues/storage-quickstart-queues-nodejs?tabs=passwordless%2Croles-azure-portal%2Cenvironment-variable-windows%2Csign-in-azure-cli)   
-[Azure CLI Storage](https://learn.microsoft.com/en-us/cli/azure/storage/message?view=azure-cli-latest)  
