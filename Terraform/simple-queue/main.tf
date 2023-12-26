@@ -33,7 +33,7 @@ resource "azurerm_storage_account" "simple_storage_account" {
   resource_group_name      = azurerm_resource_group.simple_queue_rg.name
   location                 = azurerm_resource_group.simple_queue_rg.location
   account_tier             = "Standard"
-  account_replication_type = "GRS"
+  account_replication_type = "LRS" # use ZRS or GRS for production
   min_tls_version          = "TLS1_2"
   tags = {
     Environment = "Development"
