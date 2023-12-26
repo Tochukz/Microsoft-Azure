@@ -5,10 +5,13 @@ __By Iain Foulds__
 
 ## Part 1: Azure Core Services
 ### Chapter 1: Before you begin
-[Getting Started](Learn-Azure-Month/chp1)
+[Getting Started](chp1)
 
 ### Chapter 2: Create a virtual machine
-[Azure VM](Learn-Azure-Month/chp2)  
+[Azure VM](chp2)  
 
 ### Chapter 4: Introduction to Azure Storage
-[Azure Storage](Learn-Azure-Month/chp4)
+[Azure Storage](chp4)
+
+### Chapter 5: Azure Network Basics
+[Azure Virtual Network](chp5)
