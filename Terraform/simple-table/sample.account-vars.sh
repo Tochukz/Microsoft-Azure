@@ -1,2 +1,0 @@
-resourceGroupName="YourResourceGroupName"
-storageAccountName="YourStorageAccountName"
