@@ -41,7 +41,7 @@ resource "azurerm_subnet" "web_subnet" {
 
 resource "azurerm_subnet" "remote_subnet" {
   name                 = "remote-subnet"
-  resource_group_name  = azurerm_network_security_group.web_sg.name
+  resource_group_name  = azurerm_resource_group.simple_rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.2.0/24"]
 }
@@ -60,8 +60,8 @@ resource "azurerm_public_ip" "simple_ip" {
   }
 }
 
-resource "azurerm_network_interface" "simple_nic" {
-  name                = "simple-network-interface"
+resource "azurerm_network_interface" "web_nic" {
+  name                = "web-network-interface"
   resource_group_name = azurerm_resource_group.simple_rg.name
   location            = azurerm_resource_group.simple_rg.location
 
@@ -70,13 +70,13 @@ resource "azurerm_network_interface" "simple_nic" {
     subnet_id = azurerm_subnet.web_subnet.id
     # private_ip_address_allocation = "Dynamic"
     private_ip_address_allocation = "Static"
-    private_ip_address            = "10.0.1.4"
+    private_ip_address            = "10.0.1.5"
     public_ip_address_id          = azurerm_public_ip.simple_ip.id
   }
 }
 
 resource "azurerm_network_security_group" "web_sg" {
-  name                = "simple-security-group"
+  name                = "web-security-group"
   resource_group_name = azurerm_resource_group.simple_rg.name
   location            = azurerm_resource_group.simple_rg.location
   security_rule {
@@ -86,7 +86,7 @@ resource "azurerm_network_security_group" "web_sg" {
     access                     = "Allow"
     protocol                   = "Tcp"
     source_port_range          = "*"
-    destination_port_range     = "22"
+    destination_port_range     = "80"
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
@@ -98,7 +98,22 @@ resource "azurerm_subnet_network_security_group_association" "web_subnet_web_sg_
   network_security_group_id = azurerm_network_security_group.web_sg.id
 }
 
-resource "azurern_network_security_group" "remote_sg" {
+resource "azurerm_network_interface" "remote_nic" {
+  name                = "remote-network-interface"
+  resource_group_name = azurerm_resource_group.simple_rg.name
+  location            = azurerm_resource_group.simple_rg.location
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.web_subnet.id
+    private_ip_address_allocation = "Dynamic"
+    # private_ip_address_allocation = "Static"
+    # private_ip_address            = "10.0.1.4"
+    # public_ip_address_id          = azurerm_public_ip.simple_ip.id
+  }
+}
+
+resource "azurerm_network_security_group" "remote_sg" {
   name                = "remote-security-group"
   resource_group_name = azurerm_resource_group.simple_rg.name
   location            = azurerm_resource_group.simple_rg.location
@@ -109,7 +124,7 @@ resource "azurern_network_security_group" "remote_sg" {
     access                     = "Allow"
     protocol                   = "Tcp"
     source_port_range          = "*"
-    destination_port_range     = "80"
+    destination_port_range     = "22"
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
@@ -118,4 +133,53 @@ resource "azurern_network_security_group" "remote_sg" {
 resource "azurerm_subnet_network_security_group_association" "remote_subnet_remote_sg_assoc" {
   subnet_id                 = azurerm_subnet.remote_subnet.id
   network_security_group_id = azurerm_network_security_group.remote_sg.id
+}
+
+
+resource "azurerm_linux_virtual_machine" "web_linux_vm" {
+  name                  = "webvm"
+  resource_group_name   = azurerm_resource_group.simple_rg.name
+  location              = azurerm_resource_group.simple_rg.location
+  size                  = "Standard_F2"
+  admin_username        = "ubuntu"
+  network_interface_ids = [azurerm_network_interface.web_nic.id]
+  admin_ssh_key {
+    username   = "ubuntu"
+    public_key = file("keys/web.pub")
+  }
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts"
+    version   = "latest"
+  }
+  # user_data = "base64encoded"
+}
+
+resource "azurerm_linux_virtual_machine" "remove_linux_vm" {
+  name                  = "remotevm"
+  resource_group_name   = azurerm_resource_group.simple_rg.name
+  location              = azurerm_resource_group.simple_rg.location
+  size                  = "Standard_F2"
+  admin_username        = "ubuntu"
+  network_interface_ids = [azurerm_network_interface.remote_nic.id]
+  admin_ssh_key {
+    username   = "ubuntu"
+    public_key = file("keys/web.pub")
+  }
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts"
+    version   = "latest"
+  }
+  # user_data = "base64encoded"
 }
