@@ -15,3 +15,6 @@ Go to [azure.microsoft.com/free](https://azure.microsoft.com/free) to create a f
 ### Articles
 * [Azure for AWS professionals](https://learn.microsoft.com/en-us/azure/architecture/aws-professional/)
 * [Bicep Learning path](https://learn.microsoft.com/en-us/training/paths/fundamentals-bicep/)
+
+### Learn More
+[How to run the Azure CLI in a Docker container](https://learn.microsoft.com/en-us/cli/azure/run-azure-cli-docker)  
