@@ -15,3 +15,8 @@ __By Iain Foulds__
 
 ### Chapter 5: Azure Network Basics
 [Azure Virtual Network](chp5)
+
+## Part 2: High availability and scale
+
+### Chapter 6: Azure Resource Manager
+[Azure Resource Manager](chp6)
