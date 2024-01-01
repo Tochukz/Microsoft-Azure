@@ -13,3 +13,8 @@ variable "resource_location" {
   description = "Location for other resources"
   default     = "westeurope"
 }
+variable "environment" {
+  type        = string
+  description = "The deployment environment e.g development"
+  default     = "development"
+}

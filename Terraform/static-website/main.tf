@@ -29,6 +29,16 @@ resource "azurerm_storage_account" "static_store" {
     index_document     = "index.html"
     error_404_document = "index.html"
   }
+  tags = {
+    environment = var.environment
+  }
+}
+
+resource "azurerm_management_lock" "static_store_lock" {
+  name       = "static-store-lock"
+  scope      = azurerm_storage_account.static_store.id
+  lock_level = "CanNotDelete"
+  notes      = "This lock prevents accidental deletion of the storage account"
 }
 
 resource "azurerm_storage_blob" "index_blob" {
