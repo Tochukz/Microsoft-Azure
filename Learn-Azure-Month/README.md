@@ -20,3 +20,6 @@ __By Iain Foulds__
 
 ### Chapter 6: Azure Resource Manager
 [Azure Resource Manager](chp6)
+
+### Chapter 7: High availability and redundancy
+[High availablility and redundancy](chp7)
