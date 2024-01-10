@@ -34,4 +34,7 @@ resource "azurerm_mssql_server" "server" {
 resource "azurerm_mssql_database" "db" {
   name      = "db-${random_integer.random_int.result}"
   server_id = azurerm_mssql_server.server.id
+  lifecycle {
+    prevent_destroy = false
+  }
 }
