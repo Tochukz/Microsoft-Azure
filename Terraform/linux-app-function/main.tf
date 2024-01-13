@@ -11,9 +11,10 @@ resource "azurerm_resource_group" "func_rg" {
 resource "azurerm_storage_account" "func_store" {
   name                     = "funcstore${random_integer.rand_int.result}"
   resource_group_name      = azurerm_resource_group.func_rg.name
-  location                 = azure_storage_account.func_rg.location
+  location                 = azurerm_resource_group.func_rg.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+  min_tls_version          = "TLS1_2"
 }
 
 resource "azurerm_service_plan" "linux_service_plan" {
@@ -43,7 +44,7 @@ resource "azurerm_linux_function_app" "node_linux_func" {
     application_insights_key               = azurerm_application_insights.func_insight.instrumentation_key
     application_insights_connection_string = azurerm_application_insights.func_insight.connection_string
     application_stack {
-      node_version = "16-lts"
+      node_version = "18"
     }
   }
   app_settings = {

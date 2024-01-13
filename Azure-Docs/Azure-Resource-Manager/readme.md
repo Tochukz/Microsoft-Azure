@@ -1,4 +1,4 @@
-# Azure Resource Manager  
+## Azure Resource Manager  
 [ARM Docs](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/overview)  
 [ARM Template Docs](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/overview)  
 [Bicep Docs](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep)  
