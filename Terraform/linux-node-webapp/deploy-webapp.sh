@@ -16,15 +16,17 @@ fi
 case $appType in
   express)
     cd ../../sample-apps/express-app
+    rm -r node_modules
+    npm install --omit=dev
     zip -r app.zip . -x ".git/*"
     ;;
   nest)
     cd ../../sample-apps/nest-app
     npm run build
     cp package.json dist/
-    cp -r node_modules dist/
     cd dist
-    zip -r app.zip . -x ".git/*"
+    npm install --omit=dev
+    zip -r app.zip .
     ;;
   dotnet)
     echo -n "Not yet implemented deployment app type: $appType"
@@ -36,11 +38,10 @@ case $appType in
     ;;
 esac
 
-#start_time=$(date +%s.%N)
 start_time=$SECONDS
 
 az webapp deployment source config-zip --resource-group $resourceGroupName --name $webAppName --src app.zip
-
+az webapp restart --resource-group $resourceGroupName --name $webAppName
 
 elapsed_time=$((SECONDS - start_time))
 minutes=$((elapsed_time / 60))
