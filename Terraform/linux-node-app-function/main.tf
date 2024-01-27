@@ -29,7 +29,7 @@ resource "azurerm_application_insights" "func_insight" {
   name                = "func-insight-${random_integer.rand_int.result}"
   resource_group_name = azurerm_resource_group.func_rg.name
   location            = azurerm_resource_group.func_rg.location
-  application_type    = "other"
+  application_type    = "Node.JS"
 }
 
 resource "azurerm_linux_function_app" "node_linux_func" {
