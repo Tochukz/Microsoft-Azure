@@ -27,18 +27,28 @@ $ brew install azure-functions-core-tools@4
 # brew link --overwrite azure-functions-core-tools@4
 $ func --version
 ```
+
 2. Create a local function project
 ```bash
-$ mkdir simple-api
-$ cd simple-api
+$ mkdir sample-func
+$ cd sample-func
 $ func init --javascript
 ```  
+
 3.  Add a function to your project
 ```bash
 $ func new --name HttpExample --template "HTTP trigger" --authlevel "anonymous"
 ```  
-The _--name_ argument is the unique name of your function and the _--template_ argument specifies the function's trigger.  
-4. Add Azure Storage connection information in local.settings.json.
+The _--name_ argument is the unique name of your function and the _--template_ argument specifies the function's trigger.   
+Alternatively, you can simple type use the `func new` command and follow the prompt.
+```bash
+$ mkdir sample-func
+$ cd sample-func
+$ func new
+```
+You will be prompted the choice a runtime, programming language and template.  
+
+4. Add Azure Storage connection information in _local.settings.json_.
 ```json
 {
     "Values": {       
