@@ -83,14 +83,14 @@ resource "azurerm_app_service_source_control" "code_source" {
 }
 
 
-resource "azurerm_storage_account" "simple_storage" {
-  name                     = "simplestore${random_integer.simple_int.result}"
-  resource_group_name      = azurerm_resource_group.simple_rg.name
-  location                 = azurerm_resource_group.simple_rg.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-  min_tls_version          = "TLS1_2"
-}
+# resource "azurerm_storage_account" "simple_storage" {
+#   name                     = "simplestore${random_integer.simple_int.result}"
+#   resource_group_name      = azurerm_resource_group.simple_rg.name
+#   location                 = azurerm_resource_group.simple_rg.location
+#   account_tier             = "Standard"
+#   account_replication_type = "LRS"
+#   min_tls_version          = "TLS1_2"
+# }
 
 resource "azurerm_log_analytics_workspace" "simple_analytics" {
   name                = "WebAnalytics${random_integer.simple_int.result}"

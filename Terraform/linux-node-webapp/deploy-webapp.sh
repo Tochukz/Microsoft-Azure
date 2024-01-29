@@ -18,6 +18,7 @@ case $appType in
     cd ../../sample-apps/express-app
     rm -r node_modules
     npm install --omit=dev
+    rm app.zip
     zip -r app.zip . -x ".git/*"
     ;;
   nest)
