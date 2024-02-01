@@ -1,9 +1,7 @@
-output "resource_group_name" {
-  value = azurerm_resource_group.static_rg.name
+output "api_key" {
+  value     = azurerm_static_site.simple_site.api_key
+  sensitive = true
 }
-output "storage_account_name" {
-  value = azurerm_storage_account.static_store.name
-}
-output "primary_web_host" {
-  value = azurerm_storage_account.static_store.primary_web_host
+output "default_host_name" {
+  value = azurerm_static_site.simple_site.default_host_name
 }

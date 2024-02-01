@@ -1,25 +1,13 @@
 # Static Website
 
 ### Description
-This configuration deploys a static website for and Azure storage account.  
-The Azure storage account has a special Blob container name _$web_ where all the static files live.
 
-
-### Deployment
-```
-$ terraform apply
-```
-
-### After deployment
-List the existing assets
-```
-$ az storage blob list --account-name staticstoreqtgugxbk --container-name \$web --output table
-```
-
-Copy react app to the _$web_ storage container.  
-```
-$ az storage blob upload-batch --account-name staticstoreqtgugxbk --source sample-react/build  --destination \$web --overwrite
-```
+This configuration deploys a static website resource.
 
 ### Learn more
-[Static website](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-static-website-terraform?tabs=azure-cli)
+
+[Build configuration for Azure Static Web Apps](https://learn.microsoft.com/en-us/azure/static-web-apps/build-configuration?tabs=github-actions)
+
+### Tools
+
+[Static Web Apps CLI](https://azure.github.io/static-web-apps-cli/)
