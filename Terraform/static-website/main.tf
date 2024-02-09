@@ -1,51 +1,30 @@
-data "azurerm_client_config" "current" {}
-
-resource "random_pet" "group_name" {
-  prefix = var.resource_group_prefix
-}
-
-resource "azurerm_resource_group" "static_rg" {
-  name     = random_pet.group_name.id
-  location = var.group_location
-}
-
-resource "random_string" "random_name" {
-  length  = 8
-  lower   = true
-  numeric = false
-  special = false
-  upper   = false
-}
-
-resource "azurerm_storage_account" "static_store" {
-  name                     = "staticstore${random_string.random_name.id}"
-  resource_group_name      = azurerm_resource_group.static_rg.name
-  location                 = var.resource_location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-  account_kind             = "StorageV2"
-  min_tls_version          = "TLS1_2"
-  static_website {
-    index_document     = "index.html"
-    error_404_document = "index.html"
-  }
-  tags = {
-    environment = var.environment
+terraform {
+  required_version = ">= 1.3"
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.0"
+    }
   }
 }
 
-resource "azurerm_management_lock" "static_store_lock" {
-  name       = "static-store-lock"
-  scope      = azurerm_storage_account.static_store.id
-  lock_level = "CanNotDelete"
-  notes      = "This lock prevents accidental deletion of the storage account"
+provider "azurerm" {
+  features {
+
+  }
 }
 
-resource "azurerm_storage_blob" "index_blob" {
-  name                   = "index.html"
-  storage_account_name   = azurerm_storage_account.static_store.name
-  storage_container_name = "$web"
-  type                   = "Block"
-  content_type           = "text/html"
-  source                 = "index.html"
+resource "random_integer" "group_no" {
+  min = 1000
+  max = 9999
+}
+resource "azurerm_resource_group" "site_rg" {
+  name     = "rg${random_integer.group_no.id}"
+  location = var.location
+}
+
+resource "azurerm_static_site" "simple_site" {
+  name                = "site${random_integer.group_no.id}"
+  resource_group_name = azurerm_resource_group.site_rg.name
+  location            = azurerm_resource_group.site_rg.location
 }

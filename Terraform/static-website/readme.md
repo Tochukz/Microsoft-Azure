@@ -1,25 +1,55 @@
 # Static Website
 
 ### Description
-This configuration deploys a static website for and Azure storage account.  
-The Azure storage account has a special Blob container name _$web_ where all the static files live.
 
+This configuration deploys a static website resource.
 
-### Deployment
-```
-$ terraform apply
+### Setup
+
+This instruction describes how to setup your project for Azure static webApp
+
+1. Add the static WebApp CLI to your SPA project
+
+```bash
+$ cd react-app
+$  npm install -D @azure/static-web-apps-cli
 ```
 
-### After deployment
-List the existing assets
-```
-$ az storage blob list --account-name staticstoreqtgugxbk --container-name \$web --output table
+2. Run swa init
+
+```bash
+$ npx swa init
 ```
 
-Copy react app to the _$web_ storage container.  
+Follow the prompt.
+This willm generate a `swa-cli.config.json` file based of SPA framework.
+
+3. Access you StaticWebApp deployment token.
+
+```bash
+$ terraform output api_key
 ```
-$ az storage blob upload-batch --account-name staticstoreqtgugxbk --source sample-react/build  --destination \$web --overwrite
+
+You can also access your deployment token using azure CLI
+
+```bash
+$ az staticwebapp secrets list --name <static-web-app-name> --query "properties.apiKey"
+```
+
+4. Deploy you SPA code
+
+```bash
+
+$ cd react-app
+$ npm run build
+$ export token=<deployment-token>
+$ npx swa deploy ./build --deployment-token $token
 ```
 
 ### Learn more
-[Static website](https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-static-website-terraform?tabs=azure-cli)
+
+[Build configuration for Azure Static Web Apps](https://learn.microsoft.com/en-us/azure/static-web-apps/build-configuration?tabs=github-actions)
+
+### Tools
+
+[Static Web Apps CLI](https://azure.github.io/static-web-apps-cli/)
