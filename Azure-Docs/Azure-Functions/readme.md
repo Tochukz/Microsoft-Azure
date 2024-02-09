@@ -34,6 +34,7 @@ $ mkdir sample-func
 $ cd sample-func
 $ func init --javascript
 ```  
+Or you can do `func init` and follow the prompt. 
 
 3.  Add a function to your project
 ```bash
