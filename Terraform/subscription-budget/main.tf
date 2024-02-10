@@ -27,6 +27,7 @@ data "azurerm_subscription" "current" {
 locals {
   contact_emails = split(",", var.contact_emails_string)
 }
+
 resource "azurerm_resource_group" "budget_rg" {
   name = "SubscriptionBudgetRG"
   location = var.location
@@ -58,7 +59,7 @@ resource "azurerm_consumption_budget_subscription" "subscription_budget" {
   }
   notification {
     enabled = true 
-    threshold = 50 # 50% threshold
+    threshold = 40 # 40% threshold
     operator = "GreaterThan"
     contact_emails = local.contact_emails
     contact_groups = [
