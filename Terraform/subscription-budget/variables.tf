@@ -1,22 +1,26 @@
 variable "location" {
-  type = string 
+  type        = string
   description = "The resource group location"
-  default = "westeurope"
+  default     = "westeurope"
 }
 variable "contact_emails_string" {
-  type = string 
+  type        = string
   description = "A list of contact emails for subscription budget notificaiton"
 }
-variable "receiver_email" {
-  type = string 
+variable "receiver_email1" {
+  type        = string
+  description = "A single email address for action group email receiverr"
+}
+variable "receiver_email2" {
+  type        = string
   description = "A single email address for action group email receiverr"
 }
 variable "country_code" {
-  type = string 
+  type        = string
   description = "Country code for action group sms receiver"
-  default = "27"
+  default     = "27"
 }
 variable "phone_number" {
-  type = string 
+  type        = string
   description = "A phone number for action group sms receiver"
 }

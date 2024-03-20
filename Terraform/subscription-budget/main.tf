@@ -2,7 +2,7 @@ terraform {
   required_version = ">= 1.3"
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
       version = "~> 3.0"
     }
   }
@@ -16,12 +16,12 @@ terraform {
 
 provider "azurerm" {
   features {
-    
+
   }
 }
 
 data "azurerm_subscription" "current" {
-  
+
 }
 
 locals {
@@ -29,48 +29,52 @@ locals {
 }
 
 resource "azurerm_resource_group" "budget_rg" {
-  name = "SubscriptionBudgetRG"
+  name     = "SubscriptionBudgetRG"
   location = var.location
 }
 
 # With the azurerm_monitor_action_group you can configure sms_receiver, email_reveiver, azure_function_receiver, webhook_receiver, voice_receiver etc
 resource "azurerm_monitor_action_group" "action_group" {
-  name = "SimpleBudgetAction"
+  name                = "SimpleBudgetAction"
   resource_group_name = azurerm_resource_group.budget_rg.name
-  short_name = "monitor"
+  short_name          = "monitor"
   sms_receiver {
-    name = "MessageMe"
+    name         = "MessageMe"
     country_code = var.country_code
     phone_number = var.phone_number
   }
   email_receiver {
-    name = "EmailMe"
-    email_address = var.receiver_email
+    name          = "EmailMeOnGMail"
+    email_address = var.receiver_email1
+  }
+  email_receiver {
+    name          = "EmailMeOnOutlook"
+    email_address = var.receiver_email2
   }
 }
 
 resource "azurerm_consumption_budget_subscription" "subscription_budget" {
-  name = "SubscriptionBudget"
+  name            = "SubscriptionBudget"
   subscription_id = data.azurerm_subscription.current.id
-  amount = 5  # $5 budget
-  time_grain = "Monthly"
+  amount          = 5 # $5 budget
+  time_grain      = "Monthly"
   time_period {
-    start_date = "2024-02-01T00:00:00Z"
+    start_date = "2024-03-01T00:00:00Z"
   }
   notification {
-    enabled = true 
-    threshold = 40 # 40% threshold
-    operator = "GreaterThan"
+    enabled        = true
+    threshold      = 40 # 40% threshold
+    operator       = "GreaterThan"
     contact_emails = local.contact_emails
     contact_groups = [
       azurerm_monitor_action_group.action_group.id
     ]
   }
   notification {
-    enabled = true 
-    threshold = 80 # 80% threshold
-    operator = "GreaterThan"
-    threshold_type = "Forecasted" 
-    contact_emails = [ local.contact_emails[0] ]
+    enabled        = true
+    threshold      = 80 # 80% threshold
+    operator       = "GreaterThan"
+    threshold_type = "Forecasted"
+    contact_emails = [local.contact_emails[0]]
   }
 }
