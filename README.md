@@ -1,5 +1,6 @@
 # Microsoft Azure
 [MS Docs for Azure](https://learn.microsoft.com/en-us/azure)   
+[Azure Training](https://learn.microsoft.com/en-us/training/azure/)   
 [Github Azure Samples](https://github.com/azure-samples)   
 [Resource Manager QuickStart Templates](https://github.com/Azure/azure-quickstart-templates)   
 [Browser Solution Samples](https://learn.microsoft.com/en-us/samples/browse)  
@@ -30,6 +31,5 @@ Shared   | D1(Shared)
 Basic    | B1(Basic Small), B2(Basic Medium), B3(Basic Large)
 Standard | S1(Standard Small)
 Premium  | P1V2(Premium V2 Small), P1V3(Premium V3 Small), P2V3(Premium V3 Medium), P3V3(Premium V3 Large), PC2 (Premium Container Small), PC3 (Premium Container Medium), PC4 (Premium Container Large),
-Isolated | I1 (Isolated Small), I2 (Isolated Medium), I3 (Isolated Large), I1v2 (Isolated V2 Small), I2v2 (Isolated V2 Medium), I3v2 (Isolated V2 Large)
+Isolated          | I1 (Isolated Small), I2 (Isolated Medium), I3 (Isolated Large), I1v2 (Isolated V2 Small), I2v2 (Isolated V2 Medium), I3v2 (Isolated V2 Large)
 Workflow Standard | WS1 (Logic Apps Workflow Standard 1), WS2 (Logic Apps Workflow Standard 2), WS3 (Logic Apps Workflow Standard 3).
- 
