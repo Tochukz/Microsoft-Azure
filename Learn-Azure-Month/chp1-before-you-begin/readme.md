@@ -7,6 +7,9 @@ $ brew update
 $ brew install azure-cli
 $ az version
 ```
+
+For Windows, you can download and install  Azure CLI  using the Microsoft installer from [Microsoft Installer (MSI)](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-windows?view=azure-cli-latest&pivots=msi)    
+
 For other OS see [how to install the Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 
 A new release is available roughly every three weeks.  
